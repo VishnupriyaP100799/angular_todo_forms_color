@@ -1,0 +1,38 @@
+<header class="colorful-header">
+  <div class="header-container">
+    <div class="logo-section">
+      <div class="logo-icon">🎨</div>
+      <div class="app-title">
+        <h1 class="name-highlight">VISHNU PRIYA P</h1>
+        <p class="app-subtitle">Colorful Todo App</p>
+      </div>
+    </div>
+    
+    <nav class="navigation-tabs">
+      <a 
+        routerLink="/home" 
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: true }"
+        class="nav-button">
+        <span class="button-icon">🏠</span>
+        <span class="button-text">Home</span>
+      </a>
+      
+      <a 
+        routerLink="/todo" 
+        routerLinkActive="active" 
+        class="nav-button">
+        <span class="button-icon">✅</span>
+        <span class="button-text">Todo</span>
+      </a>
+      
+      <a 
+        routerLink="/forms" 
+        routerLinkActive="active" 
+        class="nav-button">
+        <span class="button-icon">📝</span>
+        <span class="button-text">Forms</span>
+      </a>
+    </nav>
+  </div>
+</header>

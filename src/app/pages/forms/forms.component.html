@@ -1,0 +1,205 @@
+<div class="forms-page">
+  <div class="forms-container">
+    <h2 class="page-title">User Information Forms</h2>
+    
+    <!-- Template-Driven Form -->
+    <div class="form-section">
+      <h3 class="form-title">
+        <span class="form-icon">📋</span>
+        Template-Driven Form
+      </h3>
+      
+      <form #templateForm="ngForm" (ngSubmit)="onSubmitTemplate(templateForm)" class="form-wrapper">
+        <div class="form-group">
+          <label for="tpl-name" class="form-label">
+            <span class="label-icon">👤</span>
+            Name <span class="required">*</span>
+          </label>
+          <input 
+            type="text" 
+            id="tpl-name"
+            name="name" 
+            ngModel 
+            required
+            minlength="2"
+            placeholder="Enter your full name"
+            class="form-input"
+            #tplName="ngModel">
+          <div class="error-message" *ngIf="tplName.invalid && tplName.touched">
+            <span *ngIf="tplName.errors?.['required']">📛 Name is required</span>
+            <span *ngIf="tplName.errors?.['minlength']">📛 Name must be at least 2 characters</span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="tpl-email" class="form-label">
+            <span class="label-icon">📧</span>
+            Email <span class="required">*</span>
+          </label>
+          <input 
+            type="email" 
+            id="tpl-email"
+            name="email" 
+            ngModel 
+            required 
+            email
+            placeholder="Enter your email address"
+            class="form-input"
+            #tplEmail="ngModel">
+          <div class="error-message" *ngIf="tplEmail.invalid && tplEmail.touched">
+            <span *ngIf="tplEmail.errors?.['required']">📛 Email is required</span>
+            <span *ngIf="tplEmail.errors?.['email']">📛 Please enter a valid email</span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="tpl-phone" class="form-label">
+            <span class="label-icon">📱</span>
+            Phone (10 digits) <span class="required">*</span>
+          </label>
+          <input 
+            type="tel" 
+            id="tpl-phone"
+            name="phone" 
+            ngModel 
+            required 
+            pattern="^[0-9]{10}$"
+            maxlength="10"
+            placeholder="Enter 10-digit phone number"
+            class="form-input"
+            #tplPhone="ngModel">
+          <div class="error-message" *ngIf="tplPhone.invalid && tplPhone.touched">
+            <span *ngIf="tplPhone.errors?.['required']">📛 Phone is required</span>
+            <span *ngIf="tplPhone.errors?.['pattern']">📛 Phone must be exactly 10 digits</span>
+          </div>
+        </div>
+
+        <button 
+          type="submit" 
+          class="submit-button" 
+          [disabled]="templateForm.invalid || isSubmittingTemplate">
+          <span class="button-icon" *ngIf="!isSubmittingTemplate">🚀</span>
+          <span class="loading-spinner" *ngIf="isSubmittingTemplate"></span>
+          {{ isSubmittingTemplate ? 'Submitting...' : 'Submit Template Form' }}
+        </button>
+      </form>
+
+      <!-- Template Form JSON Output -->
+      <div class="json-output" *ngIf="templateResult">
+        <h4 class="output-title">
+          <span class="output-icon">📄</span>
+          Template Form JSON Output
+        </h4>
+        <div class="json-display">
+          <pre class="json-content">{{ templateResult | json }}</pre>
+        </div>
+        <button class="download-button" (click)="downloadJSON(templateResult, 'template-form-data')">
+          <span class="button-icon">💾</span>
+          Download JSON
+        </button>
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <!-- Reactive Form -->
+    <div class="form-section">
+      <h3 class="form-title">
+        <span class="form-icon">⚡</span>
+        Reactive Form
+      </h3>
+      
+      <form [formGroup]="reactiveForm" (ngSubmit)="onSubmitReactive()" class="form-wrapper">
+        <div class="form-group">
+          <label for="reactive-name" class="form-label">
+            <span class="label-icon">👤</span>
+            Name <span class="required">*</span>
+          </label>
+          <input 
+            type="text" 
+            id="reactive-name"
+            formControlName="name"
+            placeholder="Enter your full name"
+            class="form-input"
+            [class.error]="name?.invalid && name?.touched"
+            [class.success]="name?.valid && name?.touched">
+          <div class="error-message" *ngIf="name?.invalid && name?.touched">
+            <span *ngIf="name?.errors?.['required']">📛 Name is required</span>
+            <span *ngIf="name?.errors?.['minlength']">📛 Name must be at least 2 characters</span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="reactive-email" class="form-label">
+            <span class="label-icon">📧</span>
+            Email <span class="required">*</span>
+          </label>
+          <input 
+            type="email" 
+            id="reactive-email"
+            formControlName="email"
+            placeholder="Enter your email address"
+            class="form-input"
+            [class.error]="email?.invalid && email?.touched"
+            [class.success]="email?.valid && email?.touched">
+          <div class="error-message" *ngIf="email?.invalid && email?.touched">
+            <span *ngIf="email?.errors?.['required']">📛 Email is required</span>
+            <span *ngIf="email?.errors?.['email']">📛 Please enter a valid email</span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="reactive-phone" class="form-label">
+            <span class="label-icon">📱</span>
+            Phone (10 digits) <span class="required">*</span>
+          </label>
+          <input 
+            type="tel" 
+            id="reactive-phone"
+            formControlName="phone"
+            maxlength="10"
+            placeholder="Enter 10-digit phone number"
+            class="form-input"
+            [class.error]="phone?.invalid && phone?.touched"
+            [class.success]="phone?.valid && phone?.touched">
+          <div class="error-message" *ngIf="phone?.invalid && phone?.touched">
+            <span *ngIf="phone?.errors?.['required']">📛 Phone is required</span>
+            <span *ngIf="phone?.errors?.['pattern']">📛 Phone must be exactly 10 digits</span>
+          </div>
+        </div>
+
+        <button 
+          type="submit" 
+          class="submit-button" 
+          [disabled]="reactiveForm.invalid || isSubmittingReactive">
+          <span class="button-icon" *ngIf="!isSubmittingReactive">🚀</span>
+          <span class="loading-spinner" *ngIf="isSubmittingReactive"></span>
+          {{ isSubmittingReactive ? 'Submitting...' : 'Submit Reactive Form' }}
+        </button>
+      </form>
+
+      <!-- Reactive Form JSON Output -->
+      <div class="json-output" *ngIf="reactiveResult">
+        <h4 class="output-title">
+          <span class="output-icon">📄</span>
+          Reactive Form JSON Output
+        </h4>
+        <div class="json-display">
+          <pre class="json-content">{{ reactiveResult | json }}</pre>
+        </div>
+        <button class="download-button" (click)="downloadJSON(reactiveResult, 'reactive-form-data')">
+          <span class="button-icon">💾</span>
+          Download JSON
+        </button>
+      </div>
+    </div>
+
+    <!-- Clear All Data Button -->
+    <div class="form-actions" *ngIf="templateResult || reactiveResult">
+      <button class="clear-button" (click)="clearAllData()">
+        <span class="button-icon">🗑️</span>
+        Clear All Data
+      </button>
+    </div>
+  </div>
+</div>

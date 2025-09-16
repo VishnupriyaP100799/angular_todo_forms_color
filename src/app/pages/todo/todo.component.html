@@ -1,0 +1,63 @@
+<div class="todo-page">
+  <div class="todo-container">
+    <h1 class="page-title">My Todo List</h1>
+    
+    <!-- Add Todo Section -->
+    <div class="add-todo-section">
+      <div class="input-group">
+        <input 
+          #todoInput 
+          type="text" 
+          placeholder="Add a new task..."
+          class="todo-input"
+          (keyup.enter)="addTask(todoInput.value); todoInput.value = ''">
+        <button 
+          class="add-button"
+          (click)="addTask(todoInput.value); todoInput.value = ''">
+          ➕ Add Todo
+        </button>
+      </div>
+    </div>
+
+    <!-- Todo List -->
+    <div class="todo-list" *ngIf="todoList.length > 0; else noTodos">
+      <div 
+        class="todo-item"
+        [class.completed]="todo.completed"
+        *ngFor="let todo of todoList; trackBy: trackByTodoId">
+        
+        <div class="todo-content">
+          <label class="checkbox-container">
+            <input 
+              type="checkbox"
+              [checked]="todo.completed"
+              (change)="toggleTodo(todo)"
+              class="todo-checkbox">
+            <span class="checkmark"></span>
+          </label>
+          
+          <span 
+            class="todo-text"
+            [class.strike-through]="todo.completed">
+            {{ todo.task }}
+          </span>
+        </div>
+        
+        <button 
+          class="delete-button"
+          (click)="deleteTodo(todo.id)">
+          🗑️ Delete
+        </button>
+      </div>
+    </div>
+
+    <!-- No Todos Message -->
+    <ng-template #noTodos>
+      <div class="no-todos">
+        <div class="no-todos-icon">📝</div>
+        <h3>No tasks yet!</h3>
+        <p>Add your first task above to get started.</p>
+      </div>
+    </ng-template>
+  </div>
+</div>
